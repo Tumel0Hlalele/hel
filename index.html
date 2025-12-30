@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fullscreen Video</title>
+<title>Dark Mode Video</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
@@ -16,67 +16,64 @@
     }
 
     body {
-        overflow: hidden;
-        background: black;
+        background: #121212;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
     }
 
-    /* Fullscreen video */
+    /* Video container */
     #player {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none;
-    }
-
-    /* Dark overlay for contrast */
-    .overlay {
-        position: fixed;
-        inset: 0;
-        background: linear-gradient(
-            to bottom,
-            rgba(0,0,0,0.35),
-            rgba(0,0,0,0.65)
-        );
-        pointer-events: none;
+        width: 80%;
+        max-width: 800px;
+        height: 450px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+        background: black;
+        margin-bottom: 30px;
     }
 
     /* Controls */
     .controls {
-        position: fixed;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
         display: flex;
         gap: 14px;
-        pointer-events: auto;
         z-index: 10;
     }
 
     button {
-        background: rgba(255,255,255,0.9);
+        background: #1f1f1f;
+        color: #fff;
         border: none;
         border-radius: 999px;
-        padding: 14px 18px;
+        padding: 12px 18px;
         font-size: 16px;
         cursor: pointer;
         transition: all 0.25s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
     button:hover {
-        transform: translateY(-4px);
-        background: white;
+        transform: translateY(-3px);
+        background: #333;
     }
 
     button:active {
-        transform: scale(0.92);
+        transform: scale(0.95);
     }
 
     /* Mobile */
     @media (max-width: 600px) {
+        #player {
+            width: 95%;
+            height: 250px;
+        }
+
         button {
-            padding: 12px 14px;
+            padding: 10px 14px;
             font-size: 14px;
         }
     }
@@ -85,7 +82,6 @@
 <body>
 
 <div id="player"></div>
-<div class="overlay"></div>
 
 <div class="controls">
     <button onclick="seekBack()">⏪ 10s</button>
