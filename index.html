@@ -1,40 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Control</title>
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fullscreen Video</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        overflow: hidden;
+        background: black;
+    }
+
+    /* Fullscreen video */
+    #player {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+    }
+
+    /* Dark overlay for contrast */
+    .overlay {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.35),
+            rgba(0,0,0,0.65)
+        );
+        pointer-events: none;
+    }
+
+    /* Controls */
+    .controls {
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 14px;
+        pointer-events: auto;
+        z-index: 10;
+    }
+
+    button {
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 999px;
+        padding: 14px 18px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    button:hover {
+        transform: translateY(-4px);
+        background: white;
+    }
+
+    button:active {
+        transform: scale(0.92);
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
         button {
-            padding: 10px 15px;
-            margin: 5px;
-            font-size: 16px;
+            padding: 12px 14px;
+            font-size: 14px;
         }
-    </style>
+    }
+</style>
 </head>
 <body>
 
-<h2>Controlled YouTube Video</h2>
-
 <div id="player"></div>
+<div class="overlay"></div>
 
-<div>
-    <button onclick="seekBack()">⏪ Back 10s</button>
-    <button onclick="playVideo()">▶ Play</button>
-    <button onclick="pauseVideo()">⏸ Pause</button>
-    <button onclick="seekForward()">⏩ Forward 10s</button>
+<div class="controls">
+    <button onclick="seekBack()">⏪ 10s</button>
+    <button onclick="playVideo()">▶</button>
+    <button onclick="pauseVideo()">⏸</button>
+    <button onclick="seekForward()">⏩ 10s</button>
 </div>
 
-<!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
-
 <script>
     let player;
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-            height: '315',
-            width: '560',
             videoId: '3lzNihBYPEI',
             playerVars: {
                 autoplay: 1,
@@ -42,7 +107,12 @@
                 controls: 0,
                 disablekb: 1,
                 fs: 0,
-                playsinline: 1
+                playsinline: 1,
+                rel: 0,
+                modestbranding: 1
+            },
+            events: {
+                onReady: e => e.target.playVideo()
             }
         });
     }
@@ -56,13 +126,13 @@
     }
 
     function seekBack() {
-        let time = player.getCurrentTime();
-        player.seekTo(Math.max(time - 10, 0), true);
+        const t = player.getCurrentTime();
+        player.seekTo(Math.max(t - 10, 0), true);
     }
 
     function seekForward() {
-        let time = player.getCurrentTime();
-        player.seekTo(time + 10, true);
+        const t = player.getCurrentTime();
+        player.seekTo(t + 10, true);
     }
 </script>
 
