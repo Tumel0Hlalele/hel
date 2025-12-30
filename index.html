@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dark Mode Video</title>
-
+<title>Dark Video Player</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -19,10 +18,15 @@
         background: #121212;
         color: #fff;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    h1 {
+        margin-bottom: 30px;
+        font-weight: 600;
     }
 
     /* Video container */
@@ -33,15 +37,14 @@
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+        margin-bottom: 25px;
         background: black;
-        margin-bottom: 30px;
     }
 
     /* Controls */
     .controls {
         display: flex;
-        gap: 14px;
-        z-index: 10;
+        gap: 15px;
     }
 
     button {
@@ -81,6 +84,8 @@
 </head>
 <body>
 
+<h1>Silent Dark Video Player</h1>
+
 <div id="player"></div>
 
 <div class="controls">
@@ -96,7 +101,7 @@
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-            videoId: '3lzNihBYPEI',
+            videoId: '3lzNihBYPEI', // your video ID
             playerVars: {
                 autoplay: 1,
                 mute: 1,
