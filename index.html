@@ -3,20 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yt Video</title>
+    <title>YouTube Control</title>
+    <style>
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Silent Video (No Sound Control)</h1>
+<h2>Controlled YouTube Video</h2>
 
-    <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/3lzNihBYPEI?si=Qw2-pwES6v9vg60t?autoplay=1&mute=1&controls=0&disablekb=1&fs=0&playsinline=1"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        style="pointer-events: none;"
-    ></iframe>
+<div id="player"></div>
+
+<div>
+    <button onclick="seekBack()">⏪ Back 10s</button>
+    <button onclick="playVideo()">▶ Play</button>
+    <button onclick="pauseVideo()">⏸ Pause</button>
+    <button onclick="seekForward()">⏩ Forward 10s</button>
+</div>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '315',
+            width: '560',
+            videoId: '3lzNihBYPEI',
+            playerVars: {
+                autoplay: 1,
+                mute: 1,
+                controls: 0,
+                disablekb: 1,
+                fs: 0,
+                playsinline: 1
+            }
+        });
+    }
+
+    function playVideo() {
+        player.playVideo();
+    }
+
+    function pauseVideo() {
+        player.pauseVideo();
+    }
+
+    function seekBack() {
+        let time = player.getCurrentTime();
+        player.seekTo(Math.max(time - 10, 0), true);
+    }
+
+    function seekForward() {
+        let time = player.getCurrentTime();
+        player.seekTo(time + 10, true);
+    }
+</script>
 
 </body>
 </html>
